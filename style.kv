@@ -1,0 +1,150 @@
+<MyInput@TextInput>:
+    background_color:[1,1,1,1]
+    multiline: False
+    font_size:'20sp'
+	font_name:'Ninja-NarutoRUS.ttf'
+
+    padding: [5, (self.height-self.line_height)/2]
+	on_focus:
+		if self.focus: self.text = ""
+
+WindowManager:
+	Autorization:
+	Registration:
+
+<Autorization>:
+	name:"Auto"
+	enteredLogin:LoginUser
+	enteredPassword:PasswordUser
+	GridLayout:
+		rows:3
+		padding:50
+		AnchorLayout:
+			Image:
+				source:'dattebayo.png'
+				size_hint: 1,1
+
+		BoxLayout:
+			padding:30,20,30,20
+			spacing:20
+			orientation: 'vertical'
+			MyInput:
+				id:LoginUser
+				hint_text:' Логин'
+
+			MyInput:
+				id:PasswordUser
+				hint_text: "Пароль"
+				password: True
+				
+		BoxLayout:
+			padding: 30,0,30,30
+			spacing:20
+			orientation: 'vertical'
+			Button:
+				text:'Войти'
+				background_color: [.75,.63,.58,1]
+				background_normal:''
+				font_name:'Ninja-NarutoRUS.ttf'
+				size_hint: 1,0.1
+				font_size:'21sp'
+				on_release:
+					root.UserInput()
+
+			Button:
+				size_hint: 1,0.1
+				text:'Зарегистрироваться'
+				font_name:'Ninja-NarutoRUS.ttf'
+				color: [1,1,1,1]
+				background_color: [.89,.87,.85, 1]
+				color: [0, 0, 0]
+				background_normal:''
+				font_size:'18sp'
+				on_release: 
+					app.root.current = "Reg"
+					root.manager.transition.direction = "left"
+				on_press: 
+					self.background_down = ''
+<Registration>:
+	userLogin:login
+	userPhone:phone
+	userPassword:password
+	userRepeatPass:repeat
+	name:"Reg"
+    Button:
+        text:'Назад'
+		font_name:'Ninja-NarutoRUS.ttf'
+        size_hint:0.25,0.06
+        pos_hint: {'x':0.05,'top':0.97 }
+		font_size:'19sp'
+		background_color: [.89,.87,.85, 1]
+		color: [0,0,0]
+		background_normal:''
+        on_release: 
+            app.root.current = "Auto"
+            root.manager.transition.direction = "right"
+    AnchorLayout:
+        padding:50,70,50,50
+        anchor_x :'left'
+        anchor_y : 'top'
+       
+        BoxLayout:
+            spacing:10
+            orientation: 'vertical'
+			
+            Label:
+                text:'Регистрация'
+				color: [0,0,0]
+                font_size:'26sp'
+				font_name:'Ninja-NarutoRUS.ttf'
+            MyInput:
+				hint_text:'Логин'
+				id:login
+            MyInput:
+				id:phone
+                hint_text:'№ телефона'
+            MyInput:
+				hint_text: "Пароль"
+				password: True
+				id:password
+			MyInput:
+				hint_text: "Повторите пароль"
+				password: True
+				id:repeat
+			Button:
+				text:'Зарегистрироваться'
+				background_color: [.75,.63,.58,1]
+				background_normal:''
+				font_size:'21sp'
+				font_name:'Ninja-NarutoRUS.ttf'
+				on_release:
+					root.InsertUser()
+
+
+
+<MessageBox>
+	messageForText:InputForText
+	id:messageBox
+	size_hint:.7,.4
+	auto_dismiss: False
+	title:'Уведомление'
+	background_color: [.39,.44,.37,1]
+	background_normal:''
+	
+	BoxLayout:
+		orientation: 'vertical'
+		TextInput:
+			id:InputForText
+			multiline: True
+			font_name:'Ninja-NarutoRUS.ttf'
+			
+		Button:
+			text:'Закрыть'
+			size_hint:1,0.5
+			font_size:'19sp'
+			font_name:'Ninja-NarutoRUS.ttf'
+			background_color: [.94,.94,.94,1]
+			color: [0,0,0] 
+			background_normal: ''
+			on_release:
+				messageBox.dismiss()
